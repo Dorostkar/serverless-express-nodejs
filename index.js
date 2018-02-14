@@ -5,7 +5,17 @@ const bodyParser = require('body-parser');
 const app = express();
 
 const USER_TABLE = process.env.USER_TABLE;
-const dynamoDB = new AWS.DynamoDB.DocumentClient();
+let dynamoDB;
+const IS_OFFLINE = process.env.IS_OFFLINE;
+if (IS_OFFLINE === 'true') {
+  dynamoDB = new AWS.DynamoDB.DocumentClient({
+    region: 'localhost',
+    endpoint: 'http://localhost:8000'
+  });
+  console.log(dynamoDB);
+} else {
+  dynamoDB = new AWS.DynamoDB.DocumentClient();
+}
 app.use(bodyParser.json({ strict: false }));
 
 app.get('/', (req, res) => {
