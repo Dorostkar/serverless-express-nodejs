@@ -9,7 +9,7 @@ provider:
   name: aws
   runtime: nodejs6.10
   stage: dev
-  region: us-east-1
+  region: eu-west-1
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -22,7 +22,7 @@ provider:
       Resource:
         - { "Fn::GetAtt": ["UsersDynamoDBTable", "Arn" ] }
   enviroment:
-    USERS_TABLE: ${self:custom.tableName}
+    USER_TABLE: ${self:custom.tableName}
 
 functions:
   app:
